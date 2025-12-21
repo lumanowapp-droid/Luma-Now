@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Capacity } from "@/types/capacity"
 import { compressItems, Item } from "@/lib/compression"
+import { supabase } from "@/lib/supabase"
 
 export default function Page() {
   const [capacity, setCapacity] = useState<Capacity | null>(null)
@@ -12,11 +13,64 @@ export default function Page() {
   const [input, setInput] = useState("")
   const [items, setItems] = useState<Item[]>([])
 
+  const sessionIdRef = useRef<string | null>(null)
+
+  /* ---------- LOAD LAST SESSION ---------- */
+  useEffect(() => {
+    ;(async () => {
+      const { data } = await supabase
+        .from("luma_sessions")
+        .select("*")
+        .order("updated_at", { ascending: false })
+        .limit(1)
+        .single()
+
+      if (!data) return
+
+      sessionIdRef.current = data.id
+      setItems(data.items || [])
+      setCapacity(data.capacity ?? null)
+      setOverride(data.override ?? 0)
+      setEmotionalId(data.emotional_id ?? null)
+    })()
+  }, [])
+
+  /* ---------- SAVE ON CHANGE ---------- */
+  useEffect(() => {
+    if (!items.length) return
+
+    const payload = {
+      items,
+      capacity,
+      override,
+      emotional_id: emotionalId,
+      updated_at: new Date().toISOString(),
+    }
+
+    ;(async () => {
+      if (sessionIdRef.current) {
+        await supabase
+          .from("luma_sessions")
+          .update(payload)
+          .eq("id", sessionIdRef.current)
+      } else {
+        const { data } = await supabase
+          .from("luma_sessions")
+          .insert(payload)
+          .select("id")
+          .single()
+
+        sessionIdRef.current = data?.id ?? null
+      }
+    })()
+  }, [items, capacity, override, emotionalId])
+
+  /* ---------- COMPRESSION ---------- */
   let visibleItems = capacity
     ? compressItems(capacity, items, override)
     : []
 
-  // Ensure emotional item is always visible
+  // Emotional item must always be visible
   if (emotionalId && capacity) {
     const emotional = items.find(i => i.id === emotionalId)
     if (emotional && !visibleItems.some(i => i.id === emotional.id)) {
@@ -27,12 +81,16 @@ export default function Page() {
     }
   }
 
-  const canShowLess = override > 0
   const canShowMore =
     capacity !== null &&
     override < 1 &&
     visibleItems.length < items.length
 
+  const canShowLess =
+    override > 0 &&
+    (!emotionalId || visibleItems.length > 1)
+
+  /* ---------- ACTIONS ---------- */
   function addItems() {
     const newItems = input
       .split("\n")
@@ -47,6 +105,7 @@ export default function Page() {
   }
 
   function handleShowLess() {
+    if (emotionalId && override <= 0) return
     setOverride(o => Math.max(o - 1, 0))
   }
 
@@ -54,6 +113,7 @@ export default function Page() {
     setOverride(o => Math.min(o + 1, 1))
   }
 
+  /* ---------- INPUT + CAPACITY ---------- */
   if (!capacity) {
     return (
       <main className="w-full max-w-md bg-white rounded-2xl p-8 shadow-lg">
@@ -108,6 +168,7 @@ One item per line`}
     )
   }
 
+  /* ---------- TODAY VIEW ---------- */
   return (
     <main className="w-full max-w-md bg-white rounded-2xl p-10 shadow-lg">
       <h1 className="text-xl font-medium mb-8 text-center">
@@ -163,6 +224,7 @@ One item per line`}
           setEmotionalId(null)
           setInput("")
           setItems([])
+          sessionIdRef.current = null
         }}
         className="mt-8 text-sm text-gray-600 hover:text-gray-800"
       >

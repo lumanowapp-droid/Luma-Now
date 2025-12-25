@@ -58,6 +58,5 @@
     "build",
     ".next",
     "coverage"
-  ],
-  "extends": "expo/tsconfig.base"
-}
+  ]
+ }

@@ -16,25 +16,6 @@ const nextConfig = {
   experimental: {
     // esmExternals: false, // Not supported in Turbopack mode
     optimizeCss: true,
-    // Enable turbo only in development to avoid production build issues
-    ...(process.env.NODE_ENV === 'development' ? {
-      turbo: {
-        resolveAlias: {
-          'react-native': 'react-native-web',
-          'react-native$': 'react-native-web',
-        },
-        resolveExtensions: [
-          '.web.tsx',
-          '.web.ts',
-          '.web.jsx',
-          '.web.js',
-          '.tsx',
-          '.ts',
-          '.jsx',
-          '.js',
-        ],
-      },
-    } : {}),
   },
 
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {

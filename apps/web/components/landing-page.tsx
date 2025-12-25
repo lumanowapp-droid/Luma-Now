@@ -3,9 +3,24 @@
 import { useRouter } from "next/navigation"
 import { Button } from "./ui/button"
 import { Card } from "./ui/card"
+import { motion, useInView } from "framer-motion"
+import { useRef } from "react"
 
 export function LandingPage() {
   const router = useRouter()
+
+  // Refs for scroll animations
+  const testimonialsRef = useRef(null)
+  const pricingRef = useRef(null)
+  const featuresRef = useRef(null)
+  const faqRef = useRef(null)
+  const ctaRef = useRef(null)
+
+  const testimonialsInView = useInView(testimonialsRef, { once: true, margin: "-100px" })
+  const pricingInView = useInView(pricingRef, { once: true, margin: "-100px" })
+  const featuresInView = useInView(featuresRef, { once: true, margin: "-100px" })
+  const faqInView = useInView(faqRef, { once: true, margin: "-100px" })
+  const ctaInView = useInView(ctaRef, { once: true, margin: "-100px" })
 
   // Analytics tracking utility
   const trackEvent = (eventName: string, properties?: Record<string, any>) => {
@@ -28,11 +43,75 @@ export function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+      {/* Background Animated Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-20 left-10 w-32 h-32 bg-blue-200 rounded-full opacity-20"
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 10, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute top-40 right-20 w-24 h-24 bg-purple-200 rounded-full opacity-15"
+          animate={{
+            y: [0, 15, 0],
+            x: [0, -15, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+        />
+        <motion.div
+          className="absolute bottom-40 left-1/4 w-20 h-20 bg-indigo-200 rounded-full opacity-10"
+          animate={{
+            y: [0, -10, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-1/3 w-16 h-16 bg-pink-200 rounded-full opacity-20"
+          animate={{
+            y: [0, 20, 0],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "linear",
+            delay: 0.5,
+          }}
+        />
+      </div>
       {/* Header */}
-      <header className="relative z-10 px-6 py-4">
+      <motion.header
+        className="relative z-10 px-6 py-4"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+          <motion.div
+            className="flex items-center space-x-3"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="white"/>
@@ -41,8 +120,13 @@ export function LandingPage() {
               </svg>
             </div>
             <span className="text-2xl font-bold text-gray-900">Luma Now</span>
-          </div>
-          <div className="flex items-center space-x-4">
+          </motion.div>
+          <motion.div
+            className="flex items-center space-x-4"
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
             <Button
               variant="ghost"
               onClick={handleSignIn}
@@ -56,88 +140,169 @@ export function LandingPage() {
             >
               Get Started
             </Button>
-          </div>
+          </motion.div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Hero Section */}
       <section className="px-6 py-20">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="mb-8">
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+          <motion.div
+            className="mb-8"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <motion.h1
+              className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+            >
               Transform Your
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Thoughts</span>
+              <motion.span
+                className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                initial={{ backgroundPosition: "0% 50%" }}
+                animate={{ backgroundPosition: "100% 50%" }}
+                transition={{ delay: 1.2, duration: 2, repeat: Infinity, repeatType: "reverse" }}
+              >
+                Thoughts
+              </motion.span>
               <br />
               Into Action
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+            </motion.h1>
+            <motion.p
+              className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.0, duration: 0.8 }}
+            >
               Clear your mind with AI-powered brain dumps. Organize chaos into structured tasks and focus sessions that drive real results.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button
-              size="lg"
-              onClick={() => handleGetStarted('hero')}
-              className="px-8 py-4 text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-xl transform hover:scale-105 transition-all duration-200"
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Start Your Journey
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={handleSignIn}
-              className="px-8 py-4 text-lg border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-all duration-200"
+              <Button
+                size="lg"
+                onClick={() => handleGetStarted('hero')}
+                className="px-8 py-4 text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-xl transform hover:scale-105 transition-all duration-200"
+              >
+                Start Your Journey
+              </Button>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Sign In
-            </Button>
-          </div>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={handleSignIn}
+                className="px-8 py-4 text-lg border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-all duration-200"
+              >
+                Sign In
+              </Button>
+            </motion.div>
+          </motion.div>
 
           {/* Hero Image/Illustration */}
-          <div className="relative">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl mx-auto">
+          <motion.div
+            className="relative"
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1.4, duration: 1 }}
+          >
+            <motion.div
+              className="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl mx-auto"
+              whileHover={{ y: -10 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <div className="grid md:grid-cols-3 gap-8 items-center">
-                <div className="text-center">
+                <motion.div
+                  className="text-center"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 1.6, duration: 0.6 }}
+                  whileHover={{ scale: 1.05 }}
+                >
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <span className="text-2xl">🧠</span>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Brain Dump</h3>
                   <p className="text-gray-600">Dump your thoughts, get organized tasks</p>
-                </div>
-                <div className="text-center">
+                </motion.div>
+                <motion.div
+                  className="text-center"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 1.8, duration: 0.6 }}
+                  whileHover={{ scale: 1.05 }}
+                >
                   <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <span className="text-2xl">📅</span>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Timeline</h3>
                   <p className="text-gray-600">Visualize your project timeline</p>
-                </div>
-                <div className="text-center">
+                </motion.div>
+                <motion.div
+                  className="text-center"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 2.0, duration: 0.6 }}
+                  whileHover={{ scale: 1.05 }}
+                >
                   <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <span className="text-2xl">🎯</span>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Focus Mode</h3>
                   <p className="text-gray-600">Deep work sessions with laser focus</p>
-                </div>
+                </motion.div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="px-6 py-20 bg-gray-50">
+      <motion.section
+        ref={testimonialsRef}
+        className="px-6 py-20 bg-gray-50"
+        initial={{ opacity: 0, y: 50 }}
+        animate={testimonialsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={testimonialsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Trusted by Teams Worldwide
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               See how Luma Now has transformed productivity for professionals and teams.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-lg border-0">
+            <motion.div
+              className="bg-white p-6 rounded-lg shadow-lg border-0"
+              initial={{ opacity: 0, y: 50 }}
+              animate={testimonialsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400">
                   {'★'.repeat(5)}
@@ -155,9 +320,15 @@ export function LandingPage() {
                   <div className="text-sm text-gray-600">Product Manager, TechCorp</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg border-0">
+            <motion.div
+              className="bg-white p-6 rounded-lg shadow-lg border-0"
+              initial={{ opacity: 0, y: 50 }}
+              animate={testimonialsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400">
                   {'★'.repeat(5)}
@@ -175,9 +346,15 @@ export function LandingPage() {
                   <div className="text-sm text-gray-600">Software Engineer, StartupXYZ</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg border-0">
+            <motion.div
+              className="bg-white p-6 rounded-lg shadow-lg border-0"
+              initial={{ opacity: 0, y: 50 }}
+              animate={testimonialsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400">
                   {'★'.repeat(5)}
@@ -195,26 +372,43 @@ export function LandingPage() {
                   <div className="text-sm text-gray-600">Team Lead, Enterprise Inc</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Pricing Section */}
-      <section className="px-6 py-20 bg-white">
+      <motion.section
+        ref={pricingRef}
+        className="px-6 py-20 bg-white"
+        initial={{ opacity: 0, y: 50 }}
+        animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Simple, Transparent Pricing
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Choose the plan that fits your needs. Upgrade or downgrade at any time.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Free Plan */}
-            <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <motion.div
+              className="bg-white border border-gray-200 rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              initial={{ opacity: 0, y: 50 }}
+              animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
               <div className="text-center">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Free</h3>
                 <div className="text-4xl font-bold text-gray-900 mb-4">$0<span className="text-lg font-normal text-gray-600">/month</span></div>
@@ -247,10 +441,16 @@ export function LandingPage() {
                   Get Started Free
                 </Button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Pro Plan */}
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-lg p-8 shadow-xl relative transform scale-105">
+            <motion.div
+              className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-lg p-8 shadow-xl relative transform scale-105"
+              initial={{ opacity: 0, y: 50 }}
+              animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.07 }}
+            >
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium">
                   Most Popular
@@ -293,10 +493,16 @@ export function LandingPage() {
                   Start Pro Trial
                 </Button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Enterprise Plan */}
-            <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <motion.div
+              className="bg-white border border-gray-200 rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              initial={{ opacity: 0, y: 50 }}
+              animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
               <div className="text-center">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
                 <div className="text-4xl font-bold text-gray-900 mb-4">Custom</div>
@@ -335,98 +541,162 @@ export function LandingPage() {
                   Contact Sales
                 </Button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Features Section */}
-      <section className="px-6 py-20 bg-gray-50">
+      <motion.section
+        ref={featuresRef}
+        className="px-6 py-20 bg-gray-50"
+        initial={{ opacity: 0, y: 50 }}
+        animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Everything You Need to Stay Productive
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Powerful features designed to help you organize your thoughts and accomplish your goals.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">🤖</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">AI-Powered Organization</h3>
-              <p className="text-gray-600">
-                Transform chaotic thoughts into structured, actionable tasks using advanced AI algorithms.
-              </p>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">🤖</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">AI-Powered Organization</h3>
+                <p className="text-gray-600">
+                  Transform chaotic thoughts into structured, actionable tasks using advanced AI algorithms.
+                </p>
+              </Card>
+            </motion.div>
 
-            <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">⚡</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Lightning Fast</h3>
-              <p className="text-gray-600">
-                Sub-second response times ensure you never lose momentum in your workflow.
-              </p>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">⚡</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Lightning Fast</h3>
+                <p className="text-gray-600">
+                  Sub-second response times ensure you never lose momentum in your workflow.
+                </p>
+              </Card>
+            </motion.div>
 
-            <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">🔒</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Enterprise Security</h3>
-              <p className="text-gray-600">
-                Bank-level encryption and security measures protect your sensitive information.
-              </p>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">🔒</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Enterprise Security</h3>
+                <p className="text-gray-600">
+                  Bank-level encryption and security measures protect your sensitive information.
+                </p>
+              </Card>
+            </motion.div>
 
-            <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">📱</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Cross-Platform</h3>
-              <p className="text-gray-600">
-                Seamless experience across web, mobile, and desktop with real-time synchronization.
-              </p>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">📱</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Cross-Platform</h3>
+                <p className="text-gray-600">
+                  Seamless experience across web, mobile, and desktop with real-time synchronization.
+                </p>
+              </Card>
+            </motion.div>
 
-            <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">🎨</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Beautiful Design</h3>
-              <p className="text-gray-600">
-                Intuitive interface that feels natural and delightful to use every day.
-              </p>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">🎨</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Beautiful Design</h3>
+                <p className="text-gray-600">
+                  Intuitive interface that feels natural and delightful to use every day.
+                </p>
+              </Card>
+            </motion.div>
 
-            <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">📊</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Analytics & Insights</h3>
-              <p className="text-gray-600">
-                Track your productivity patterns and get insights to optimize your workflow.
-              </p>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <Card className="p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">📊</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Analytics & Insights</h3>
+                <p className="text-gray-600">
+                  Track your productivity patterns and get insights to optimize your workflow.
+                </p>
+              </Card>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* FAQ Section */}
-      <section className="px-6 py-20 bg-white">
+      <motion.section
+        ref={faqRef}
+        className="px-6 py-20 bg-white"
+        initial={{ opacity: 0, y: 50 }}
+        animate={faqInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={faqInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Frequently Asked Questions
             </h2>
             <p className="text-xl text-gray-600">
               Everything you need to know about Luma Now
             </p>
-          </div>
+          </motion.div>
 
           <div className="space-y-6">
             <div className="border border-gray-200 rounded-lg">
@@ -486,36 +756,67 @@ export function LandingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section className="px-6 py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+      <motion.section
+        ref={ctaRef}
+        className="px-6 py-20 bg-gradient-to-r from-blue-600 to-purple-600"
+        initial={{ opacity: 0, y: 50 }}
+        animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
+          <motion.h2
+            className="text-4xl font-bold text-white mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             Ready to Transform Your Productivity?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          </motion.h2>
+          <motion.p
+            className="text-xl text-blue-100 mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
             Join thousands of professionals who have revolutionized their workflow with Luma Now.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              onClick={() => handleGetStarted('cta')}
-              className="px-8 py-4 text-lg bg-white text-blue-600 hover:bg-gray-50 shadow-xl transform hover:scale-105 transition-all duration-200"
+          </motion.p>
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Get Started Free
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={handleSignIn}
-              className="px-8 py-4 text-lg border-2 border-white text-white hover:bg-white hover:text-blue-600 transition-all duration-200"
+              <Button
+                size="lg"
+                onClick={() => handleGetStarted('cta')}
+                className="px-8 py-4 text-lg bg-white text-blue-600 hover:bg-gray-50 shadow-xl transform hover:scale-105 transition-all duration-200"
+              >
+                Get Started Free
+              </Button>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Sign In
-            </Button>
-          </div>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={handleSignIn}
+                className="px-8 py-4 text-lg border-2 border-white text-white hover:bg-white hover:text-blue-600 transition-all duration-200"
+              >
+                Sign In
+              </Button>
+            </motion.div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
       <footer className="px-6 py-12 bg-gray-900 text-white">

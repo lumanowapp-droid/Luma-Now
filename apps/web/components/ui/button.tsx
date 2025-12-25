@@ -10,21 +10,21 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[#7b68ee] text-white shadow-sm hover:bg-[#6a5acd] rounded-[4px]", // ClickUp primary (brand purple)
+          "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
         destructive:
-          "bg-[#e74c3c] text-white shadow-sm hover:bg-[#c0392b] rounded-[4px]", // ClickUp danger red
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-[#E0E0E0] bg-white shadow-sm hover:bg-[#F7F8F9] rounded-[4px]", // ClickUp secondary
+          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-[#F3F3F3] text-[#292d34] hover:bg-[#E0E0E0] rounded-[4px]", // ClickUp ghost/tertiary
-        ghost: "hover:bg-[#F3F3F3] rounded-[4px]", // ClickUp ghost
-        link: "text-[#0091FF] underline-offset-4 hover:underline rounded-[4px]", // ClickUp link blue
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-[36px] px-3 py-[6px]", // ClickUp small/standard: 6px top/bottom, 12px left/right
-        sm: "h-[36px] px-3 py-[6px] text-xs rounded-[4px]",
-        lg: "h-[48px] px-6 py-3 rounded-[6px]", // ClickUp large: 12px top/bottom, 24px left/right
-        icon: "h-9 w-9 rounded-[4px]",
+        default: "h-9 px-4 py-2",
+        sm: "h-8 rounded-md px-3 text-xs",
+        lg: "h-10 rounded-md px-8",
+        icon: "h-9 w-9",
       },
     },
     defaultVariants: {

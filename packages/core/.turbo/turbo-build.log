@@ -1,0 +1,49 @@
+
+> @multi-platform-app/core@1.0.0 build C:\Luma Now\packages\core
+> tsup src/index.ts --format esm,cjs --dts
+
+[34mCLI[39m Building entry: src/index.ts
+[34mCLI[39m Using tsconfig: ..\..\tsconfig.json
+[34mCLI[39m tsup v7.3.0
+[34mCLI[39m Target: es2022
+[34mESM[39m Build start
+[34mCJS[39m Build start
+[32mCJS[39m [1mdist\index.js [22m[32m17.85 KB[39m
+[32mCJS[39m ⚡️ Build success in 102ms
+[32mESM[39m [1mdist\platformHaptics-NUCLVRWQ.mjs [22m[32m92.00 B[39m
+[32mESM[39m [1mdist\index.mjs                    [22m[32m13.05 KB[39m
+[32mESM[39m [1mdist\chunk-3OCDR2YC.mjs           [22m[32m242.00 B[39m
+[32mESM[39m [1mdist\platformVoice-Y6KRGYKS.mjs   [22m[32m2.09 KB[39m
+[32mESM[39m ⚡️ Build success in 103ms
+[34mDTS[39m Build start
+src/authService.ts(86,49): error TS18046: 'error' is of type 'unknown'.
+src/authService.ts(144,50): error TS18046: 'error' is of type 'unknown'.
+src/authService.ts(177,50): error TS18046: 'error' is of type 'unknown'.
+src/authService.ts(220,48): error TS18046: 'error' is of type 'unknown'.
+src/authService.ts(240,41): error TS18046: 'error' is of type 'unknown'.
+src/authService.ts(329,50): error TS18046: 'error' is of type 'unknown'.
+src/authService.ts(367,53): error TS18046: 'error' is of type 'unknown'.
+
+[31mError: error occured in dts build
+    at Worker.<anonymous> (C:\Luma Now\node_modules\.pnpm\tsup@7.3.0_postcss@8.5.6_typescript@5.9.3\node_modules\tsup\dist\index.js:2297:26)
+    at Worker.emit (node:events:518:28)
+    at MessagePort.<anonymous> (node:internal/worker:263:53)
+    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:826:20)
+    at exports.emitMessage (node:internal/per_context/messageport:23:28)[39m
+[31mDTS[39m [31mBuild error[39m
+[31mRollupError: [plugin dts] src/authService.ts: Failed to compile. Check the logs above.
+    at getRollupError (C:\Luma Now\node_modules\.pnpm\rollup@4.54.0\node_modules\rollup\dist\shared\parseAst.js:285:41)
+    at Object.error (C:\Luma Now\node_modules\.pnpm\rollup@4.54.0\node_modules\rollup\dist\shared\parseAst.js:281:42)
+    at Object.error (C:\Luma Now\node_modules\.pnpm\rollup@4.54.0\node_modules\rollup\dist\shared\rollup.js:913:32)
+    at Object.error (C:\Luma Now\node_modules\.pnpm\rollup@4.54.0\node_modules\rollup\dist\shared\rollup.js:22486:42)
+    at generateDtsFromTs (C:\Luma Now\node_modules\.pnpm\tsup@7.3.0_postcss@8.5.6_typescript@5.9.3\node_modules\tsup\dist\rollup.js:7775:22)
+    at C:\Luma Now\node_modules\.pnpm\tsup@7.3.0_postcss@8.5.6_typescript@5.9.3\node_modules\tsup\dist\rollup.js:7782:59
+    at _nullishCoalesce (C:\Luma Now\node_modules\.pnpm\tsup@7.3.0_postcss@8.5.6_typescript@5.9.3\node_modules\tsup\dist\rollup.js:1:198)
+    at Object.transform (C:\Luma Now\node_modules\.pnpm\tsup@7.3.0_postcss@8.5.6_typescript@5.9.3\node_modules\tsup\dist\rollup.js:7782:18)
+    at C:\Luma Now\node_modules\.pnpm\rollup@4.54.0\node_modules\rollup\dist\shared\rollup.js:3392:40[39m
+src/voice/index.ts(94,29): error TS2347: Untyped function calls may not accept type arguments.
+src/voice/index.ts(95,27): error TS2347: Untyped function calls may not accept type arguments.
+src/voice/index.ts(96,29): error TS2347: Untyped function calls may not accept type arguments.
+src/voice/index.ts(97,24): error TS2347: Untyped function calls may not accept type arguments.
+
+ ELIFECYCLE  Command failed with exit code 1.

@@ -1,0 +1,4 @@
+
+> @luma/store@1.0.0 type-check C:\Luma Now\packages\store
+> tsc --noEmit --skipLibCheck
+

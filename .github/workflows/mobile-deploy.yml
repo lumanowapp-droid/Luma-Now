@@ -1,0 +1,122 @@
+name: Mobile Deployment
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'apps/mobile/**'
+      - 'packages/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/mobile/**'
+      - 'packages/**'
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Build profile'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - development
+          - preview
+          - production
+      platform:
+        description: 'Platform to build'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - ios
+          - android
+
+env:
+  NODE_VERSION: "18"
+  PNPM_VERSION: "8"
+  EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+jobs:
+  build-mobile:
+    name: Build Mobile App
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        platform: ${{ github.event.inputs.platform == 'all' && fromJSON('["ios", "android"]') || fromJSON(format('["{0}"]', github.event.inputs.platform)) }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build iOS app
+        if: matrix.platform == 'ios'
+        run: |
+          cd apps/mobile
+          eas build --platform ios --profile ${{ github.event.inputs.profile || 'preview' }} --non-interactive
+
+      - name: Build Android app
+        if: matrix.platform == 'android'
+        run: |
+          cd apps/mobile
+          eas build --platform android --profile ${{ github.event.inputs.profile || 'preview' }} --non-interactive
+
+      - name: Submit to App Store (Production Only)
+        if: github.ref == 'refs/heads/main' && github.event.inputs.profile == 'production' && matrix.platform == 'ios'
+        run: |
+          cd apps/mobile
+          eas submit --platform ios --latest --non-interactive
+
+      - name: Submit to Play Store (Production Only)
+        if: github.ref == 'refs/heads/main' && github.event.inputs.profile == 'production' && matrix.platform == 'android'
+        run: |
+          cd apps/mobile
+          eas submit --platform android --latest --non-interactive
+
+      - name: Create OTA Update
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd apps/mobile
+          eas update --branch production --message "${{ github.event.head_commit.message }}"
+
+      - name: Notify Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: "#mobile-builds"
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        if: always()

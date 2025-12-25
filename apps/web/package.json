@@ -1,0 +1,47 @@
+{
+  "name": "@multi-platform-app/web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo",
+    "dev:webpack": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
+    "@luma/store": "*",
+    "@multi-platform-app/ai": "*",
+    "@multi-platform-app/config": "*",
+    "@multi-platform-app/core": "*",
+    "@multi-platform-app/types": "*",
+    "@multi-platform-app/ui": "*",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@supabase/ssr": "^0.0.10",
+    "@supabase/supabase-js": "^2.38.4",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "critters": "^0.0.25",
+    "lucide-react": "^0.292.0",
+    "next": "14.0.0",
+    "next-themes": "^0.4.6",
+    "openai": "^6.15.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native-web": "^0.21.0",
+    "tailwind-merge": "^2.0.0",
+    "zustand": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.2",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.2.2"
+  }
+}

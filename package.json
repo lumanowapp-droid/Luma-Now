@@ -1,0 +1,95 @@
+{
+  "name": "multi-platform-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise-grade multi-platform application with React, React Native, and Expo",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "build:fast": "turbo run build:fast",
+    "dev": "turbo run dev",
+    "dev:fast": "turbo run dev:fast",
+    "dev:web": "pnpm --filter @multi-platform-app/web dev",
+    "dev:web:webpack": "pnpm --filter @multi-platform-app/web dev:webpack",
+    "dev:analyze": "ANALYZE=true pnpm dev:web",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "clean": "turbo run clean",
+    "clean:deep": "rimraf node_modules apps/*/node_modules packages/*/node_modules && pnpm install",
+    "type-check": "turbo run type-check",
+    "type-check:fast": "turbo run type-check:fast",
+    "test:watch": "turbo run test:watch",
+    "test:coverage": "turbo run test:coverage",
+    "e2e:test": "turbo run e2e:test",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "deploy": "turbo run deploy",
+    "release": "changeset version && pnpm install && git add -A",
+    "publish": "changeset publish",
+    "postinstall": "echo 'Installation complete'",
+    "mobile": "pnpm --filter @multi-platform-app/mobile start",
+    "mobile:ios": "pnpm --filter @multi-platform-app/mobile ios",
+    "mobile:android": "pnpm --filter @multi-platform-app/mobile android"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.2",
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.8.2",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "dotenv-cli": "^11.0.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-native": "^4.1.0",
+    "husky": "^8.0.3",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-transform-stub": "^2.0.0",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
+    "tailwindcss": "^3.4.19",
+    "tailwindcss-animate": "^1.0.7",
+    "turbo": "^2.7.2",
+    "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.10.0",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ],
+    "*.{css,scss}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "**/.env.*local"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**",
+        ".next/**",
+        "!.next/cache/**",
+        ".expo/**"
+      ],
+      "cache": false
+    },
+    "build:fast": {
+      "dependsOn": [
+        "^build:fast"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**",
+        ".next/**",
+        "!.next/cache/**",
+        ".expo/**"
+      ],
+      "cache": true
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:fast": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:mobile": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "test:coverage": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "type-check": {
+      "dependsOn": [
+        "^type-check"
+      ],
+      "outputs": []
+    },
+    "type-check:fast": {
+      "dependsOn": [
+        "^type-check:fast"
+      ],
+      "outputs": [],
+      "cache": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "e2e:test": {
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "storybook:build": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": [
+        "storybook-static/**"
+      ]
+    },
+    "deploy": {
+      "dependsOn": [
+        "build",
+        "test",
+        "lint"
+      ]
+    }
+  }
+}

@@ -1,0 +1,189 @@
+#!/usr/bin/env node
+
+/**
+ * Performance monitoring script for build times
+ * Usage: node performance-monitor.js <command>
+ * Example: node performance-monitor.js dev:web
+ */
+
+const { spawn } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+
+const PERFORMANCE_LOG_FILE = path.join(__dirname, '.performance-logs.json');
+
+class PerformanceMonitor {
+  constructor() {
+    this.startTime = null;
+    this.memoryUsage = {};
+  }
+
+  startTimer() {
+    this.startTime = process.hrtime.bigint();
+    this.memoryUsage.start = process.memoryUsage();
+  }
+
+  endTimer() {
+    if (!this.startTime) return null;
+    
+    const endTime = process.hrtime.bigint();
+    const duration = Number(endTime - this.startTime) / 1000000; // Convert to milliseconds
+    this.memoryUsage.end = process.memoryUsage();
+    
+    return {
+      duration,
+      memoryDelta: {
+        rss: this.memoryUsage.end.rss - this.memoryUsage.start.rss,
+        heapUsed: this.memoryUsage.end.heapUsed - this.memoryUsage.start.heapUsed,
+        heapTotal: this.memoryUsage.end.heapTotal - this.memoryUsage.start.heapTotal,
+      },
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  async runCommand(command, args = []) {
+    console.log(`🚀 Running: ${command} ${args.join(' ')}`);
+    
+    this.startTimer();
+    
+    return new Promise((resolve, reject) => {
+      const child = spawn(command, args, {
+        stdio: 'inherit',
+        shell: true,
+      });
+
+      child.on('close', (code) => {
+        const metrics = this.endTimer();
+        
+        if (code === 0) {
+          console.log(`✅ Completed in ${metrics.duration.toFixed(2)}ms`);
+          resolve({ success: true, metrics, code });
+        } else {
+          console.log(`❌ Failed with code ${code} after ${metrics.duration.toFixed(2)}ms`);
+          reject({ success: false, metrics, code });
+        }
+      });
+
+      child.on('error', (error) => {
+        const metrics = this.endTimer();
+        console.log(`❌ Error after ${metrics.duration.toFixed(2)}ms:`, error.message);
+        reject({ success: false, error, metrics });
+      });
+    });
+  }
+
+  logMetrics(command, metrics) {
+    let logs = {};
+    
+    try {
+      if (fs.existsSync(PERFORMANCE_LOG_FILE)) {
+        logs = JSON.parse(fs.readFileSync(PERFORMANCE_LOG_FILE, 'utf8'));
+      }
+    } catch (error) {
+      console.warn('Could not read existing performance logs:', error.message);
+    }
+
+    if (!logs[command]) {
+      logs[command] = [];
+    }
+
+    logs[command].push(metrics);
+
+    // Keep only last 50 entries per command
+    if (logs[command].length > 50) {
+      logs[command] = logs[command].slice(-50);
+    }
+
+    try {
+      fs.writeFileSync(PERFORMANCE_LOG_FILE, JSON.stringify(logs, null, 2));
+    } catch (error) {
+      console.warn('Could not write performance logs:', error.message);
+    }
+  }
+
+  printSummary(logs) {
+    console.log('\n📊 Performance Summary:');
+    console.log('='.repeat(50));
+    
+    Object.entries(logs).forEach(([command, entries]) => {
+      if (entries.length === 0) return;
+      
+      const durations = entries.map(e => e.duration);
+      const avgDuration = durations.reduce((a, b) => a + b, 0) / durations.length;
+      const minDuration = Math.min(...durations);
+      const maxDuration = Math.max(...durations);
+      
+      console.log(`\n${command}:`);
+      console.log(`  Average: ${avgDuration.toFixed(2)}ms`);
+      console.log(`  Fastest: ${minDuration.toFixed(2)}ms`);
+      console.log(`  Slowest: ${maxDuration.toFixed(2)}ms`);
+      console.log(`  Runs: ${entries.length}`);
+    });
+  }
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  const command = args[0];
+  
+  if (!command) {
+    console.log('Usage: node performance-monitor.js <command>');
+    console.log('Available commands:');
+    console.log('  dev:web        - Monitor web development server');
+    console.log('  build:web      - Monitor web build process');
+    console.log('  type-check     - Monitor TypeScript checking');
+    console.log('  summary        - Show performance summary');
+    process.exit(1);
+  }
+
+  const monitor = new PerformanceMonitor();
+
+  try {
+    let result;
+    
+    switch (command) {
+      case 'dev:web':
+        result = await monitor.runCommand('npm', ['run', 'dev:web']);
+        break;
+        
+      case 'build:web':
+        result = await monitor.runCommand('npm', ['run', 'build:web']);
+        break;
+        
+      case 'type-check':
+        result = await monitor.runCommand('npm', ['run', 'type-check']);
+        break;
+        
+      case 'summary':
+        if (fs.existsSync(PERFORMANCE_LOG_FILE)) {
+          const logs = JSON.parse(fs.readFileSync(PERFORMANCE_LOG_FILE, 'utf8'));
+          monitor.printSummary(logs);
+        } else {
+          console.log('No performance data found. Run a monitored command first.');
+        }
+        return;
+        
+      default:
+        console.log(`Unknown command: ${command}`);
+        process.exit(1);
+    }
+
+    if (result && result.metrics) {
+      monitor.logMetrics(command, result.metrics);
+      console.log('📈 Performance data logged');
+    }
+
+  } catch (error) {
+    console.error('❌ Command failed:', error.error?.message || error.message);
+    if (error.metrics) {
+      monitor.logMetrics(command, error.metrics);
+    }
+    process.exit(1);
+  }
+}
+
+if (require.main === module) {
+  main();
+}
+
+module.exports = PerformanceMonitor;

@@ -1,0 +1,1 @@
+export { VoiceServiceImpl } from './platformVoice.web';

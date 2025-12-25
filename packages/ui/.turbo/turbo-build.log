@@ -1,0 +1,36 @@
+
+> @multi-platform-app/ui@1.0.0 build C:\Luma Now\packages\ui
+> tsup src/index.ts src/tokens/index.ts --format esm,cjs --dts --minify --sourcemap
+
+[34mCLI[39m Building entry: src/index.ts, src/tokens/index.ts
+[34mCLI[39m Using tsconfig: ..\..\tsconfig.json
+[34mCLI[39m tsup v7.3.0
+[34mCLI[39m Target: es2022
+[34mESM[39m Build start
+[34mCJS[39m Build start
+[32mCJS[39m [1mdist\index.js            [22m[32m52.29 KB[39m
+[32mCJS[39m [1mdist\tokens\index.js     [22m[32m7.81 KB[39m
+[32mCJS[39m [1mdist\index.js.map        [22m[32m179.12 KB[39m
+[32mCJS[39m [1mdist\tokens\index.js.map [22m[32m27.64 KB[39m
+[32mCJS[39m ⚡️ Build success in 115ms
+[32mESM[39m [1mdist\tokens\index.mjs                 [22m[32m873.00 B[39m
+[32mESM[39m [1mdist\platformHaptics-RRV2KYN2.mjs     [22m[32m150.00 B[39m
+[32mESM[39m [1mdist\index.mjs                        [22m[32m42.81 KB[39m
+[32mESM[39m [1mdist\chunk-TMF73242.mjs               [22m[32m6.86 KB[39m
+[32mESM[39m [1mdist\chunk-OQ3RZ3Z3.mjs               [22m[32m159.00 B[39m
+[32mESM[39m [1mdist\chunk-F3SXD3QV.mjs               [22m[32m520.00 B[39m
+[32mESM[39m [1mdist\platformVoice-VZLLLMJI.mjs       [22m[32m1.33 KB[39m
+[32mESM[39m [1mdist\tokens\index.mjs.map             [22m[32m71.00 B[39m
+[32mESM[39m [1mdist\index.mjs.map                    [22m[32m150.36 KB[39m
+[32mESM[39m [1mdist\platformHaptics-RRV2KYN2.mjs.map [22m[32m71.00 B[39m
+[32mESM[39m [1mdist\chunk-OQ3RZ3Z3.mjs.map           [22m[32m873.00 B[39m
+[32mESM[39m [1mdist\chunk-TMF73242.mjs.map           [22m[32m27.26 KB[39m
+[32mESM[39m [1mdist\chunk-F3SXD3QV.mjs.map           [22m[32m71.00 B[39m
+[32mESM[39m [1mdist\platformVoice-VZLLLMJI.mjs.map   [22m[32m4.30 KB[39m
+[32mESM[39m ⚡️ Build success in 118ms
+[34mDTS[39m Build start
+[32mDTS[39m ⚡️ Build success in 4905ms
+[32mDTS[39m [1mdist\index.d.mts        [22m[32m19.90 KB[39m
+[32mDTS[39m [1mdist\tokens\index.d.mts [22m[32m32.28 KB[39m
+[32mDTS[39m [1mdist\index.d.ts         [22m[32m19.89 KB[39m
+[32mDTS[39m [1mdist\tokens\index.d.ts  [22m[32m32.28 KB[39m

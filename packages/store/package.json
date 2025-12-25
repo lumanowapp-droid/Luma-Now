@@ -1,0 +1,44 @@
+{
+  "name": "@luma/store",
+  "version": "1.0.0",
+  "description": "Zustand state management for Luma Now - ADHD-friendly task planning",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "react-native": "./dist/index.native.js",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --platform neutral --minify --sourcemap",
+    "build:fast": "tsup src/index.ts --format esm,cjs --dts --platform neutral --no-minify --no-sourcemap",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --platform neutral --watch --no-minify",
+    "dev:fast": "tsup src/index.ts --format esm,cjs --platform neutral --watch --no-minify",
+    "clean": "rimraf dist",
+    "type-check": "tsc --noEmit --skipLibCheck"
+  },
+  "dependencies": {
+    "@multi-platform-app/types": "*",
+    "zustand": "^4.4.7",
+    "immer": "^10.0.3",
+    "@react-native-async-storage/async-storage": "^1.19.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.25",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "rimraf": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "zustand",
+    "state-management",
+    "store",
+    "adhd",
+    "multi-platform"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,4 @@
+
+> @multi-platform-app/types@1.0.0 type-check C:\Luma Now\packages\types
+> tsc --noEmit
+

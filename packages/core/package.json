@@ -1,0 +1,34 @@
+{
+  "name": "@multi-platform-app/core",
+  "version": "1.0.0",
+  "description": "Business logic and core services for multi-platform application",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "dev:fast": "tsup src/index.ts --format esm,cjs --watch",
+    "clean": "rimraf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.25",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "rimraf": "^5.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "business-logic",
+    "core-services",
+    "multi-platform"
+  ],
+  "license": "MIT"
+}

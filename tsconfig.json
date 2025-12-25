@@ -1,0 +1,63 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es6"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@multi-platform-app/ui": [
+        "./packages/ui/src"
+      ],
+      "@multi-platform-app/core": [
+        "./packages/core/src"
+      ],
+      "@multi-platform-app/ai": [
+        "./packages/ai/src"
+      ],
+      "@multi-platform-app/store": [
+        "./packages/store/src"
+      ],
+      "@multi-platform-app/types": [
+        "./packages/types/src"
+      ],
+      "@multi-platform-app/config": [
+        "./packages/config/src"
+      ]
+    },
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "packages/*/src/**/*.ts",
+    "packages/*/src/**/*.tsx",
+    "apps/*/src/**/*.ts",
+    "apps/*/src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    "coverage"
+  ],
+  "extends": "expo/tsconfig.base"
+}

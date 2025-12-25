@@ -1,0 +1,1 @@
+export { HapticServiceImpl } from './platformHaptics.web';

@@ -1,0 +1,32 @@
+{
+  "name": "@multi-platform-app/types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types for multi-platform application",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "dev:fast": "tsup src/index.ts --format esm,cjs --watch",
+    "clean": "rimraf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "rimraf": "^5.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "typescript",
+    "types",
+    "shared-types",
+    "multi-platform"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,13 @@
+{
+  "type-check": [
+    {
+      "duration": 18391.341,
+      "memoryDelta": {
+        "rss": 434176,
+        "heapUsed": -1011920,
+        "heapTotal": 0
+      },
+      "timestamp": "2025-12-24T15:58:27.037Z"
+    }
+  ]
+}

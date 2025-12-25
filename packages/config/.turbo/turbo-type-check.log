@@ -1,0 +1,36 @@
+
+> @multi-platform-app/config@1.0.0 type-check C:\Luma Now\packages\config
+> tsc --noEmit
+
+../ai/src/providers/anthropic.ts(27,18): error TS7053: Element implicitly has an 'any' type because expression of type 'ModelTier' can't be used to index type '{ readonly default: "claude-3-5-sonnet-20241022"; readonly fast: "claude-3-5-haiku-20241022"; readonly smart: "claude-3-5-sonnet-20241022"; readonly opus: "claude-3-opus-20240229"; }'.
+  Property 'vision' does not exist on type '{ readonly default: "claude-3-5-sonnet-20241022"; readonly fast: "claude-3-5-haiku-20241022"; readonly smart: "claude-3-5-sonnet-20241022"; readonly opus: "claude-3-opus-20240229"; }'.
+../ai/src/providers/cloudflare.ts(27,18): error TS7053: Element implicitly has an 'any' type because expression of type 'ModelTier' can't be used to index type '{ readonly default: "@cf/meta/llama-3.1-8b-instruct"; readonly fast: "@cf/meta/llama-3.1-8b-instruct"; readonly smart: "@cf/meta/llama-3.1-70b-instruct"; readonly vision: "@cf/llava-hf/llava-1.5-7b-hf"; }'.
+  Property 'opus' does not exist on type '{ readonly default: "@cf/meta/llama-3.1-8b-instruct"; readonly fast: "@cf/meta/llama-3.1-8b-instruct"; readonly smart: "@cf/meta/llama-3.1-70b-instruct"; readonly vision: "@cf/llava-hf/llava-1.5-7b-hf"; }'.
+../ai/src/providers/openai.ts(24,18): error TS7053: Element implicitly has an 'any' type because expression of type 'ModelTier' can't be used to index type '{ readonly default: "gpt-4o-mini"; readonly fast: "gpt-4o-mini"; readonly smart: "gpt-4o"; readonly vision: "gpt-4o"; }'.
+  Property 'opus' does not exist on type '{ readonly default: "gpt-4o-mini"; readonly fast: "gpt-4o-mini"; readonly smart: "gpt-4o"; readonly vision: "gpt-4o"; }'.
+../core/src/authService.ts(86,49): error TS18046: 'error' is of type 'unknown'.
+../core/src/authService.ts(144,50): error TS18046: 'error' is of type 'unknown'.
+../core/src/authService.ts(177,50): error TS18046: 'error' is of type 'unknown'.
+../core/src/authService.ts(220,48): error TS18046: 'error' is of type 'unknown'.
+../core/src/authService.ts(240,41): error TS18046: 'error' is of type 'unknown'.
+../core/src/authService.ts(329,50): error TS18046: 'error' is of type 'unknown'.
+../core/src/authService.ts(367,53): error TS18046: 'error' is of type 'unknown'.
+../core/src/voice/index.ts(94,29): error TS2347: Untyped function calls may not accept type arguments.
+../core/src/voice/index.ts(95,27): error TS2347: Untyped function calls may not accept type arguments.
+../core/src/voice/index.ts(96,29): error TS2347: Untyped function calls may not accept type arguments.
+../core/src/voice/index.ts(97,24): error TS2347: Untyped function calls may not accept type arguments.
+../core/src/voice/platformVoice.native.ts(98,30): error TS2339: Property 'EncodingType' does not exist on type 'typeof import("C:/Luma Now/node_modules/expo-file-system/build/index")'.
+../ui/src/Button/Button.native.tsx(45,31): error TS2339: Property 'borderColor' does not exist on type '{ borderRadius: 8; fontFamily: string; fontWeight: "500"; opacity: number; width: string; backgroundColor: "#5B7FA6" | "hsl(220, 13%, 95%)"; color: "hsl(0, 0%, 100%)"; borderWidth: number; paddingVertical: 8; paddingHorizontal: 12; fontSize: 15; minHeight: number; } | ... 7 more ... | { ...; }'.
+  Property 'borderColor' does not exist on type '{ borderRadius: 8; fontFamily: string; fontWeight: "500"; opacity: number; width: string; backgroundColor: "#5B7FA6" | "hsl(220, 13%, 95%)"; color: "hsl(0, 0%, 100%)"; borderWidth: number; paddingVertical: 8; paddingHorizontal: 12; fontSize: 15; minHeight: number; }'.
+../ui/src/components/VoiceInput/VoiceInput.native.tsx(13,31): error TS2307: Cannot find module '@multi-platform-app/core/src/voice' or its corresponding type declarations.
+../ui/src/components/VoiceInput/VoiceInput.native.tsx(14,24): error TS2307: Cannot find module '@multi-platform-app/core/src/haptics' or its corresponding type declarations.
+../ui/src/gestures/Swipeable.native.tsx(19,24): error TS2307: Cannot find module '@multi-platform-app/core/src/haptics' or its corresponding type declarations.
+../ui/src/primitives/Modal.native.tsx(35,5): error TS2322: Type '{ borderRadius: 12; padding: number; maxHeight: "90%"; backgroundColor: "hsl(0, 0%, 100%)"; maxWidth: number; width: string; }' is not assignable to type 'ViewStyle | TextStyle | ImageStyle'.
+  Type '{ borderRadius: 12; padding: number; maxHeight: "90%"; backgroundColor: "hsl(0, 0%, 100%)"; maxWidth: number; width: string; }' is not assignable to type 'ImageStyle'.
+    Types of property 'width' are incompatible.
+      Type 'string' is not assignable to type 'DimensionValue | undefined'.
+../ui/src/primitives/Modal.web.tsx(8,22): error TS2305: Module '"."' has no exported member 'getModalOverlayStyles'.
+../ui/src/primitives/Modal.web.tsx(8,45): error TS2305: Module '"."' has no exported member 'getModalContentStyles'.
+../ui/src/screens/BrainDump/BrainDump.native.tsx(63,11): error TS2322: Type '{ onTranscript: (transcript: string) => void; disabled: boolean; }' is not assignable to type 'IntrinsicAttributes & VoiceInputProps'.
+  Property 'onTranscript' does not exist on type 'IntrinsicAttributes & VoiceInputProps'. Did you mean 'onTranscription'?
+ ELIFECYCLE  Command failed with exit code 2.

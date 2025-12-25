@@ -186,6 +186,10 @@ declare const getTextBaseStyles: (variant?: TextVariant, color?: string, weight?
     lineHeight: 16.8;
     letterSpacing: number;
 };
+/**
+ * Cross-platform Text component
+ */
+declare const Text: React.FC<TextProps>;
 
 /**
  * Touchable Primitive Component
@@ -352,13 +356,6 @@ interface ToggleProps {
     hapticFeedback?: boolean;
     testID?: string;
 }
-
-/**
- * Text Primitive - Web Implementation
- * Uses standard HTML and CSS for web platform
- */
-
-declare const Text: React.FC<TextProps>;
 
 /**
  * Touchable Primitive - Web Implementation

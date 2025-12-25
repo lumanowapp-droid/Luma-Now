@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSupabase } from '../../../providers'
 
+// Force dynamic rendering to avoid build-time context issues
+export const dynamic = 'force-dynamic'
+
 export default function AuthCallbackPage() {
   const supabase = useSupabase()
   const router = useRouter()
